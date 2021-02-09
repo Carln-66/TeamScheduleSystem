@@ -59,10 +59,19 @@ public class TeamService {
 //        该员工已是某团队成员
 //        该员正在休假，无法添加
         Programmer p = (Programmer) e;
-        if ("BUSY".equalsIgnoreCase(p.getStatus().getNAME())) {
-            throw new TeamException("该员工已在其他开发团队中");
-        } else if ("VOCATION".equalsIgnoreCase(((Programmer) e).getStatus().getNAME()))
-            throw new TeamException("该员工正在休假中");
+//        if ("BUSY".equalsIgnoreCase(p.getStatus().getNAME())) {
+//            throw new TeamException("该员工已在其他开发团队中");
+//        } else if ("VOCATION".equalsIgnoreCase(((Programmer) e).getStatus().getNAME()))
+//            throw new TeamException("该员工正在休假中");
+        switch (p.getStatus()) {    //byte、short、char、int、String、枚举类对象可以作为switch语句变量的类型
+            case BUSY:
+                throw new TeamException("该员工已经是某团队成员");
+            case VACATION:
+                throw new TeamException("该员工正在休假。无法添加");
+        }
+
+
+
 //        团队中至多只能有一名架构师
 //        团队中至多只能有两名设计师
 //        团队中至多只能有三名程序员
